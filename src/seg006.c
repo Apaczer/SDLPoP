@@ -591,7 +591,13 @@ void play_seq() {
 				}
 				// fallthrough!
 			case SEQ_JMP: // jump
+#ifdef MIYOO
+				swap_seqeunce_1 = *(SEQTBL_0 + Char.curr_seq);
+				swap_seqeunce_2 = *(SEQTBL_0 + Char.curr_seq + 1);
+				Char.curr_seq = SDL_SwapLE16(swap_seqeunce_1 | (swap_seqeunce_2<<8));
+#else
 				Char.curr_seq = SDL_SwapLE16(*(const word*)(SEQTBL_0 + Char.curr_seq));
+#endif
 				break;
 			case SEQ_UP: // up
 				--Char.curr_row;

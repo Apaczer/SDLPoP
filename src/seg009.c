@@ -2389,7 +2389,12 @@ sound_buffer_type* convert_digi_sound(sound_buffer_type* digi_buffer) {
 	converted_buffer->converted.length = expanded_length;
 
 	byte* source = waveinfo.samples;
+#ifdef MIYOO
+	short* dest = malloc(sizeof(short) * converted_buffer->converted.length);
+	converted_buffer->converted.samples = dest;
+#else
 	short* dest = converted_buffer->converted.samples;
+#endif
 
 	for (int i = 0; i < expanded_frames; ++i) {
 		float src_frame_float = i * freq_ratio;
@@ -3856,12 +3861,17 @@ void init_timer(int frequency) {
 	perf_counters_per_tick = perf_frequency / fps;
 	milliseconds_per_counter = 1000.0f / perf_frequency;
 #else
+#ifdef MIYOO
+	global_timer = SDL_AddTimer(1000/frequency, timer_callback, NULL);
+#endif
 	if (global_timer != 0) {
 		if (!SDL_RemoveTimer(global_timer)) {
 			sdlperror("init_timer: SDL_RemoveTimer");
 		}
 	}
+#ifndef MIYOO
 	global_timer = SDL_AddTimer(1000/frequency, timer_callback, NULL);
+#endif
 	if (global_timer == 0) {
 		sdlperror("init_timer: SDL_AddTimer");
 		quit(1);

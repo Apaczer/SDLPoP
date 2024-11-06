@@ -570,7 +570,11 @@ typedef struct ogg_type {
 
 typedef struct converted_audio_type {
 	int length;
+#ifdef MIYOO
+	short * samples;
+#else
 	short samples[];
+#endif
 } converted_audio_type;
 
 typedef struct sound_buffer_type {
