@@ -600,9 +600,11 @@ int process_key() {
 			}
 #endif
 		break;
+#ifndef MIYOO
 		case SDL_SCANCODE_SPACE: // Space
 			is_show_time = 1;
 		break;
+#endif
 		case SDL_SCANCODE_A | WITH_CTRL: // Ctrl+A
 			if (current_level != 15) {
 				stop_sounds();
@@ -1749,6 +1751,15 @@ void read_keyb_control() {
 		key_state = KEYSTATE_HELD;
 	}
 
+#ifdef MIYOO
+	if (key_states[SDL_SCANCODE_UP] & key_state || key_states[SDL_SCANCODE_HOME] & key_state || key_states[SDL_SCANCODE_SPACE] & key_state
+	    || key_states[SDL_SCANCODE_KP_8] & key_state || key_states[SDL_SCANCODE_KP_7] & key_state || key_states[SDL_SCANCODE_KP_9] & key_state
+	) {
+		control_y = CONTROL_HELD_UP;
+	} else if (key_states[SDL_SCANCODE_CLEAR] & key_state || key_states[SDL_SCANCODE_DOWN] & key_state || key_states[SDL_SCANCODE_LALT] & key_state
+	           || key_states[SDL_SCANCODE_KP_5] & key_state || key_states[SDL_SCANCODE_KP_2] & key_state
+	) {
+#else
 	if (key_states[SDL_SCANCODE_UP] & key_state || key_states[SDL_SCANCODE_HOME] & key_state || key_states[SDL_SCANCODE_PAGEUP] & key_state
 	    || key_states[SDL_SCANCODE_KP_8] & key_state || key_states[SDL_SCANCODE_KP_7] & key_state || key_states[SDL_SCANCODE_KP_9] & key_state
 	) {
@@ -1756,6 +1767,7 @@ void read_keyb_control() {
 	} else if (key_states[SDL_SCANCODE_CLEAR] & key_state || key_states[SDL_SCANCODE_DOWN] & key_state
 	           || key_states[SDL_SCANCODE_KP_5] & key_state || key_states[SDL_SCANCODE_KP_2] & key_state
 	) {
+#endif
 		control_y = CONTROL_HELD_DOWN;
 	}
 	if (key_states[SDL_SCANCODE_LEFT] & key_state || key_states[SDL_SCANCODE_HOME] & key_state
