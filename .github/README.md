@@ -17,6 +17,12 @@ cd ..
 - generate IPK (gm2xpkg):
 ```
 export ASSETSDIR="$(mktemp -d)"
-cp -r --parents doc mods data/icon.png $ASSETSDIR
+cp -r --parents doc mods data/light.png $ASSETSDIR
+cp data/icon.png $ASSETSDIR/prince.png
+cp SDLPoP.ini $ASSETSDIR/SDLPoP.ini-EXAMPLE
 gm2xpkg -i -c -q -f miyoopkg.cfg
 ```
+
+### Notes:
+
+You can use `SDLPoP.ini-EXAMPLE` file to add your own game configuration (place at PWD and remove `-EXAMPLE` appendix).
