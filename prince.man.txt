@@ -1,0 +1,6 @@
+CONTROLS:
+    D-Pad: arrows
+    A: down
+    Y: up
+    X: Shift
+    SELECT: Display in-game menu.
